@@ -1,6 +1,6 @@
-local lsp_zero = require('lsp-zero')
+local lsp = require('lsp-zero')
 
-lsp_zero.on_attach(function(client, bufnr)
+lsp.on_attach(function(client, bufnr)
   local opts = {buffer = bufnr, remap = false}
 
   vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end, opts)
@@ -17,11 +17,23 @@ end)
 
 require('mason').setup({})
 require('mason-lspconfig').setup({
-  ensure_installed = {'clangd'},
+  ensure_installed = {
+    'bashls',
+    'clang-format',
+    'clangd',
+    'crystalline',
+    'cssls',
+    'eslint',
+    'html',
+    'jsonls',
+    'lua_ls',
+    'pyright',
+    'tsserver'
+  },
   handlers = {
-    lsp_zero.default_setup,
+    lsp.default_setup,
     lua_ls = function()
-      local lua_opts = lsp_zero.nvim_lua_ls()
+      local lua_opts = lsp.nvim_lua_ls()
       require('lspconfig').lua_ls.setup(lua_opts)
     end,
   }
